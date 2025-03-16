@@ -60,6 +60,11 @@ class BalanceController extends Controller
             ->body($this->form()->edit($id));
     }
 
+    public function store()
+    {
+        dd("test");
+    }
+
     /**
      * Create interface.
      *

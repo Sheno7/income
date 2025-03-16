@@ -18,4 +18,10 @@
  *
  */
 
+use App\Models\Setting;
+use Encore\Admin\Admin;
+
 Encore\Admin\Form::forget(['map', 'editor']);
+$doller= @Setting::where('key','doller')->first()->value ?? 1;
+Admin::html('<script> var doller = "'.$doller.'";</script>');
+Admin::js('admin.js');

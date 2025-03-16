@@ -16,5 +16,6 @@ Route::group([
     $router->resource("transaction","TransactionController");
     $router->resource("account","AccountController");
     $router->resource("balance","BalanceController");
+    $router->resource("setting","SettingController");
 
 });
