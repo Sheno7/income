@@ -30,8 +30,15 @@ class HomeController extends Controller
               sum(CASE
                  WHEN type =  'OUT' THEN value_in_pound
                  ELSE 0
-              END) as output
-              ")
+              END) as output,
+              sum(CASE
+                 WHEN type =  'IN' THEN value_in_dollar
+                 ELSE 0
+              END) as income_dollar,
+              sum(CASE
+                 WHEN type =  'OUT' THEN value_in_dollar
+                 ELSE 0
+              END) as output_dollar")
             ->when(request()->input("start_date"), function ($q) {
                 return $q->where("date", ">=", request()->input("start_date"));
             })->when(request()->input("end_date"), function ($q) {
@@ -53,6 +60,10 @@ class HomeController extends Controller
                 $row->column(4, new InfoBox('In', 'money', 'aqua', null, $result->income.' LE'));
                 $row->column(4, new InfoBox('Out', 'money', 'green', null, $result->output.' LE'));
                 $row->column(4, new InfoBox('Total incomes', 'money', 'yellow', null, $result->income-$result->output.' LE'));
+
+                $row->column(4, new InfoBox('In dollar', 'money', 'aqua', null, $result->income_dollar.' USD'));
+                $row->column(4, new InfoBox('Out dollar', 'money', 'green', null, $result->output_dollar.' USD'));
+                $row->column(4, new InfoBox('Total incomes dollar', 'money', 'yellow', null, $result->income_dollar-$result->output_dollar.' USD'));
             });
     }
 
