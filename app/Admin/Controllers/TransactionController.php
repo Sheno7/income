@@ -106,8 +106,12 @@ class TransactionController extends Controller
         $grid->column('source_id',"Source")->display(function (){
             return @Source::find($this->source_id)->name;
         });
+
         $grid->value_in_pound('value_in_pound')->totalRow();
         $grid->value_in_dollar('value_in_dollar')->totalRow();
+        $grid->column('dollar_value',"Dollar value")->display(function (){
+            return round($this->value_in_pound/$this->value_in_dollar,2);
+        });
         $grid->type('type');
         $grid->date('date');
         $grid->note('note');
